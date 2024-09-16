@@ -3,8 +3,8 @@ import Faqs from "../models/faq.model.js";
 
 export const createfaq = async (req, res, next) => {
   try {
-    const { title, desc } = req.body;
-    const data = await Faqs.create({ title, desc });
+    const { name, title, desc } = req.body;
+    const data = await Faqs.create({ name, title, desc });
     return res.status(200).json({
       success: true,
       data: data,
@@ -42,15 +42,15 @@ export const getfaq = async (req, res) => {
 
 export const updatefaq = async (req, res) => {
   try {
-    const { id, title, desc } = req.body;
+    const { id, name, title, desc } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res
         .status(404)
-        .json({ success: false, message: `No User with id: ${id}` });
+        .json({ success: false, message: `No Such Faq Exists !!` });
     }
     const data = await Faqs.findByIdAndUpdate(
       id,
-      { title, desc },
+      { name, title, desc },
       { new: true }
     );
     return res.status(200).json({
