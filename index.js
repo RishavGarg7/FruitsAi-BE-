@@ -14,11 +14,7 @@ const PORT = process.env.PORT || 8000;
 database();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://fruits-ai-fe.vercel.app/",
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(router);
