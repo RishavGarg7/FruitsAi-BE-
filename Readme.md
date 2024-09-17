@@ -20,7 +20,7 @@ This is the backend for the **Fruit.ai** health manager application, built using
 ## Tech Stack
 
 - **Backend:** `Node.js`, `Express`
-- **Middleware:** `body-parser`, `cors`, `dotenv`
+- **Middleware:** `body-parser`, `bcrypt, `cors`, `dotenv`
 - **Database:** `MongoDB`
 
 ## Getting Started
@@ -49,14 +49,15 @@ This is the backend for the **Fruit.ai** health manager application, built using
 
    - Create a `.env` file in the root directory:
      ```
-     PORT=5000
+     PORT=8000
+     MONGODB_URL="your-connection-string"
      ```
 
 4. **Run the Server:**
    ```bash
    npm start
    ```
-   - The backend will run on `http://localhost:5000`.
+   - The backend will run on `http://localhost:8000`.
 
 ## Project Structure
 
@@ -73,7 +74,7 @@ This is the backend for the **Fruit.ai** health manager application, built using
 
 ## API Endpoints
 
-### Base URL: `http://localhost:5000`
+### Base URL: `http://localhost:8000`
 
 - **GET /faqs**: Retrieve all FAQs.
 - **POST /faqs**: Create a new FAQ.
