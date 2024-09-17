@@ -6,7 +6,7 @@ export const createfaq = async (req, res, next) => {
     const { name, title, desc } = req.body;
     if (!name || !title || !desc) {
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, message: "Please provide all Details!!" });
     }
     const data = await Faqs.create({ name, title, desc });
@@ -21,7 +21,7 @@ export const createfaq = async (req, res, next) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "Error Occured during creation !!",
     });
   }
 };
@@ -40,7 +40,7 @@ export const getfaq = async (req, res) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "Error Occured during fetching !!",
     });
   }
 };
@@ -50,7 +50,7 @@ export const updatefaq = async (req, res) => {
     const { id, name, title, desc } = req.body;
     if (!id || !name || !title || !desc) {
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, message: "Please provide all Details!!" });
     }
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -74,7 +74,7 @@ export const updatefaq = async (req, res) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "Error Occured during updation !!",
     });
   }
 };
@@ -93,7 +93,7 @@ export const deletefaq = async (req, res) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "Error Occured during deletion !!",
     });
   }
 };

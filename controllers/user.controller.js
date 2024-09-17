@@ -6,19 +6,19 @@ export const registerUser = async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, message: "Please provide all Details!!" });
-    }
-    if (password.length < 6) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Password least length is 6!!" });
     }
     const isUser = await User.findOne({ email });
     if (isUser) {
       return res
-        .status(500)
+        .status(409)
         .json({ success: false, message: "Already a user, Please Login!!" });
+    }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Password least length is 6!!" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -36,7 +36,7 @@ export const registerUser = async (req, res, next) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "Error While Creating User !!",
     });
   }
 };
@@ -46,7 +46,7 @@ export const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
       return res
-        .status(500)
+        .status(400)
         .json({ success: false, message: "Please provide all Details!!" });
     }
     const isUser = await User.findOne({ email });
@@ -54,9 +54,10 @@ export const loginUser = async (req, res, next) => {
       ? await bcrypt.compare(password, isUser.password)
       : false;
     if (!isUser || !matchPsw) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Invalid Email or Password!!" });
+      return res.status(401).json({
+        success: false,
+        message: "Invalid Email or Password!!",
+      });
     }
     isUser.password = undefined;
     return res.status(200).json({
@@ -67,10 +68,10 @@ export const loginUser = async (req, res, next) => {
   } catch (err) {
     console.error(err);
     console.log(err);
-    res.status(500).json({
+    res.status(404).json({
       success: false,
       error: err.message,
-      message: "Server Error Occured !!",
+      message: "No User Found !!",
     });
   }
 };
