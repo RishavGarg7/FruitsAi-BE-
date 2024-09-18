@@ -3,13 +3,13 @@ import Faqs from "../models/faq.model.js";
 
 export const createfaq = async (req, res, next) => {
   try {
-    const { name, title, desc } = req.body;
-    if (!name || !title || !desc) {
+    const { name, title, desc, url } = req.body;
+    if (!name || !title || !desc || !url) {
       return res
         .status(400)
         .json({ success: false, message: "Please provide all Details!!" });
     }
-    const data = await Faqs.create({ name, title, desc });
+    const data = await Faqs.create({ name, title, desc, url });
     return res.status(200).json({
       success: true,
       data: data,
@@ -60,7 +60,7 @@ export const updatefaq = async (req, res) => {
     }
     const data = await Faqs.findByIdAndUpdate(
       id,
-      { name, title, desc },
+      { name, title, desc, url },
       { new: true }
     );
     return res.status(200).json({
